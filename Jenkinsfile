@@ -5,9 +5,6 @@ pipeline {
     string(name: 'SPEC', defaultValue: 'cypress/e2e/1-getting-started/**', description: 'Enter the path of script to exec')
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
   }
-  options {
-    //ansiColor('xterm')
-  }
   stages {
     // first stage installs node dependencies and Cypress binary
     stage('build') {
