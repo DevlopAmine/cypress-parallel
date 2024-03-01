@@ -6,7 +6,7 @@ pipeline {
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
   }
   options {
-    ansiColor('xterm')
+    //ansiColor('xterm')
   }
   stages {
     // first stage installs node dependencies and Cypress binary
