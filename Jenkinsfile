@@ -10,13 +10,13 @@ pipeline {
     stage('build') {
       steps {
         echo 'building the app'
-        bat 'node ./scripts/start.js'
       }
 
     }
     stage('testing') {
       steps {
         bat 'npm i'
+        bat 'node ./scripts/start.js'
         bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}'
       }
 
