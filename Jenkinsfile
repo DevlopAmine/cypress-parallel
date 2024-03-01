@@ -5,6 +5,9 @@ pipeline {
     string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/actions.cy.js', description: 'Enter the path of script to exec')
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
   }
+  options {
+    ansiColor('xterm')
+  }
   stages {
     // first stage installs node dependencies and Cypress binary
     stage('build') {
@@ -17,7 +20,7 @@ pipeline {
       steps {
         bat 'npm i'
         //bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}'
-        bat 'npx cypress run --record --browser chrome'
+        bat 'npx cypress run --browser chrome'
       }
 
     }
@@ -35,7 +38,7 @@ pipeline {
     // shutdown the server running in the background
     always {
       echo 'Stopping local server'
-      sh 'pkill -f http-server'
+      //sh 'pkill -f http-server'
       //bat 'taskkill /IM http-server /F'
 
     }
