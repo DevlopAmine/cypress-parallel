@@ -5,6 +5,9 @@ pipeline {
     string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/actions.cy.js', description: 'Enter the path of script to exec')
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
   }
+   environment {
+      CYPRESS_RECORD_KEY = '46fec6e6-3734-4e43-a577-b74c4c88483e'
+    }
   options {
     ansiColor('xterm')
   }
@@ -21,9 +24,9 @@ pipeline {
       
         bat 'npm i'
         echo 'record key below'
-        echo $(CYPRESS_RECORD_KEY)
-        echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
-        bat 'npx cypress run --record --key=${Cypress.env("CYPRESS_RECORD_KEY")}  --spec %SPEC%'
+        echo %CYPRESS_RECORD_KEY%
+        //echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
+        bat 'npx cypress run --record --key=%CYPRESS_RECORD_KEY% --spec %SPEC%'
         //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
         //bat 'npx cypress run --browser chrome'
       }
