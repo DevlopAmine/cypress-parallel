@@ -36,6 +36,8 @@ pipeline {
   post {
     // shutdown the server running in the background
     always {
+
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'index.html', reportName: 'HTML Report'])
       echo 'Stopping local server'
       //sh 'pkill -f http-server'
       //bat 'taskkill /IM http-server /F'
