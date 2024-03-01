@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'SPEC', defaultValue: 'cypress/e2e/1-getting-started/**', description: 'Enter the path of script to exec')
+    string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/actions.cy.js', description: 'Enter the path of script to exec')
     choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
   }
   stages {
@@ -16,7 +16,6 @@ pipeline {
     stage('testing') {
       steps {
         bat 'npm i'
-        bat 'node ./scripts/start.js'
         bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}'
       }
 
