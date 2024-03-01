@@ -19,7 +19,8 @@ pipeline {
     stage('testing') {
       steps {
         bat 'npm i'
-        bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
+        bat 'npx cypress run --record --key=%env.CYPRESS_RECORD_KEY%  --spec %SPEC%'
+        //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
         //bat 'npx cypress run --browser chrome'
       }
 
