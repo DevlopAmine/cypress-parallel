@@ -18,7 +18,8 @@ pipeline {
     }
     stage('testing') {
       steps {
-        bat 'npm ci'
+      
+        bat 'npm i'
         echo 'record key below'
         echo $(CYPRESS_RECORD_KEY)
         echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
