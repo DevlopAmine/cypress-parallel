@@ -18,7 +18,8 @@ pipeline {
     }
     stage('testing') {
       steps {
-        bat 'npm i'
+        bat 'npm ci'
+        echo 'Testo '+ %Cypress.env("CYPRESS_RECORD_KEY")%
         echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
         bat 'npx cypress run --record --key=${Cypress.env("CYPRESS_RECORD_KEY")}  --spec %SPEC%'
         //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
