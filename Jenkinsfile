@@ -16,7 +16,8 @@ pipeline {
     stage('testing') {
       steps {
         bat 'npm i'
-        bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}'
+        //bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}'
+        bat 'npx cypress run --record --browser chrome'
       }
 
     }
@@ -34,7 +35,8 @@ pipeline {
     // shutdown the server running in the background
     always {
       echo 'Stopping local server'
-      bat 'taskkill /IM http-server /F'
+      sh 'pkill -f http-server'
+      //bat 'taskkill /IM http-server /F'
 
     }
   }
