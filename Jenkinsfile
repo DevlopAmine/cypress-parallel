@@ -2,12 +2,12 @@ pipeline {
   agent any
 
   //parameters {
-    //string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/**.cy.js', description: 'Enter the path of script to exec')
-    //choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
- // }
-   environment {
-      CYPRESS_RECORD_KEY = '46fec6e6-3734-4e43-a577-b74c4c88483e'
-    }
+  //string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/**.cy.js', description: 'Enter the path of script to exec')
+  //choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
+  // }
+  environment {
+    CYPRESS_RECORD_KEY = '46fec6e6-3734-4e43-a577-b74c4c88483e'
+  }
   options {
     ansiColor('xterm')
   }
@@ -15,32 +15,34 @@ pipeline {
     // first stage installs node dependencies and Cypress binary
     stage('build') {
 
-       steps {
-          // Check if node_modules exists
-          script {
-              if (!fileExists('node_modules')) {
-                  // If node_modules doesn't exist, install dependencies
-                  sh 'npm install'
-              }
+      steps {
+        // Check if node_modules exists
+
+        script {
+          // Clean existing node_modules (optional)
+          bat 'rm -rf node_modules'
+
+          // Cache the node_modules directory
+          dir('node_modules') {
+            cache true
           }
-      }
-      post {
-        always {
-            // Cache node_modules directory
-            cache(paths: ['node_modules'], key: 'npm-dependencies')
-            echo 'record key below'
-            echo '%CYPRESS_RECORD_KEY%'
+
+          // Install dependencies using npm or npm ci (recommended)
+          bat 'npm ci' // Or sh 'npm install'
         }
+        echo 'record key below'
+        echo '%CYPRESS_RECORD_KEY%'
+
       }
 
     }
     stage('testing') {
-   
-        //echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
-        //bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --group Windows/Chrome chrome'
-        //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
-        //bat 'npx cypress run --browser chrome'
-      
+
+      //echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
+      //bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --group Windows/Chrome chrome'
+      //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
+      //bat 'npx cypress run --browser chrome'
+
       parallel {
         // start several test jobs in parallel, and they all
         // will use Cypress Cloud to load balance any found spec files
