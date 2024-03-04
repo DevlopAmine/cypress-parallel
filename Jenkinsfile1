@@ -33,7 +33,7 @@
 // to see Administrator password - you will need it to configure Jenkins via localhost:8080 UI
 //    docker logs blue-ocean
 
-/* pipeline {
+pipeline {
   agent {
     // this image provides everything needed to run Cypress
     docker {
@@ -107,4 +107,3 @@
     }
   }
 }
- */

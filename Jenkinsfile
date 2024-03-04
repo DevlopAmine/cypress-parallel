@@ -26,10 +26,29 @@ pipeline {
         echo 'record key below'
         echo '%CYPRESS_RECORD_KEY%'
         //echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
-        bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --group Windows/Chrome chrome'
-        bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --group Windows/Firefox firefox'
+        //bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --group Windows/Chrome chrome'
         //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
         //bat 'npx cypress run --browser chrome'
+      }
+
+
+      parallel {
+        // start several test jobs in parallel, and they all
+        // will use Cypress Cloud to load balance any found spec files
+        stage('tester A') {
+          steps {
+            echo "Running build %env.BUILD_ID%"
+            bat "npm run e2e:record:parallel"
+          }
+        }
+
+        // second tester runs the same command
+        stage('tester B') {
+          steps {
+            echo "Running build %env.BUILD_ID%"
+            bat "npm run e2e:record:parallel"
+          }
+        }
       }
 
     }
@@ -46,8 +65,8 @@ pipeline {
     // shutdown the server running in the background
     always {
 
-      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-      echo 'Stopping local server'
+      // publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+      // echo 'Stopping local server'
       //sh 'pkill -f http-server'
       //bat 'taskkill /IM http-server /F'
 
