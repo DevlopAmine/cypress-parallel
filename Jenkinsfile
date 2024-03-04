@@ -23,7 +23,7 @@ pipeline {
           if (fileExists('node_modules'))
           {
               echo 'removing node_modules...'
-              sh 'rm -rf node_modules'
+              sh 'AAA'
               echo 'node_modules removed'
           }
           
