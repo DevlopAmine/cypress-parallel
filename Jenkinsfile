@@ -16,7 +16,7 @@ pipeline {
     stage('build') {
       steps {
         echo 'building the app'
-        bat 'npm i'
+        bat 'npm ci'
         echo 'record key below'
         echo '%CYPRESS_RECORD_KEY%'
       }
@@ -32,18 +32,18 @@ pipeline {
       parallel {
         // start several test jobs in parallel, and they all
         // will use Cypress Cloud to load balance any found spec files
-        stage('tester A') {
+        stage('run on chrome') {
           steps {
-            echo "Running build %env.BUILD_ID%"
-            bat "npm run e2e:record:parallel"
+            echo "Running build  ${env.BUILD_ID}"
+            bat "npm run e2e:record:chrome"
           }
         }
 
         // second tester runs the same command
-        stage('tester B') {
+        stage('run on edge') {
           steps {
-            echo "Running build %env.BUILD_ID%"
-            bat "npm run e2e:record:parallel"
+            echo "Running build  ${env.BUILD_ID}"
+            bat "npm run e2e:record:edge"
           }
         }
       }
