@@ -66,7 +66,7 @@ pipeline {
         stage('Group 1-getting-started/') {
           steps {
             echo "Running build  ${env.BUILD_NUMBER}"
-            bat 'npm cypress run --record --group getStarted --spec "cypress/e2e/1-getting-started/*"'
+            bat 'npm run cypress run --record --group getStarted --spec "cypress/e2e/1-getting-started/*"'
             
           }
         }
@@ -74,7 +74,7 @@ pipeline {
          stage('Group 2-advanced-examples') {
           steps {
             echo "Running build  ${env.BUILD_NUMBER}"
-            bat 'npm cypress run --record --group advancedExamp --spec "cypress/e2e/2-advanced-examples/*"'
+            bat 'npm run cypress run --record --group advancedExamp --spec "cypress/e2e/2-advanced-examples/*"'
           }
         }
     }
