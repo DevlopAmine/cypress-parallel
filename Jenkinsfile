@@ -32,9 +32,9 @@ pipeline {
         bat 'cd ..'
         echo 'out node_modules'
 
-        echo "create C://Users//PC//npm_cache ..."
-        bat "mkdir C://Users//PC//npm_cache"
-        bat "xcopy /S /E node_modules C://npm_cache" // Copy node_modules to cache
+        echo "create npm_cache ..."
+        bat "mkdir npm_cache"
+        bat "xcopy /S /E node_modules npm_cache" // Copy node_modules to cache
 
         // Install dependencies using npm or npm ci (recommended)
         echo 'Installing dependencies using npm ci'
