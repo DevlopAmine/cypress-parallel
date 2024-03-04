@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/**.cy.js', description: 'Enter the path of script to exec')
+    //string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/**.cy.js', description: 'Enter the path of script to exec')
     //choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
   }
    environment {
@@ -14,11 +14,23 @@ pipeline {
   stages {
     // first stage installs node dependencies and Cypress binary
     stage('build') {
-      steps {
-        echo 'building the app'
-        bat 'npm ci'
-        echo 'record key below'
-        echo '%CYPRESS_RECORD_KEY%'
+
+       steps {
+          // Check if node_modules exists
+          script {
+              if (!fileExists('node_modules')) {
+                  // If node_modules doesn't exist, install dependencies
+                  sh 'npm install'
+              }
+          }
+      }
+      post {
+        always {
+            // Cache node_modules directory
+            cache(paths: ['node_modules'], key: 'npm-dependencies')
+            echo 'record key below'
+            echo '%CYPRESS_RECORD_KEY%'
+        }
       }
 
     }
@@ -59,7 +71,6 @@ pipeline {
   }
 
   post {
-    // shutdown the server running in the background
     always {
 
       // publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/report', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
