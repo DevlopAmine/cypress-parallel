@@ -20,14 +20,22 @@ pipeline {
 
         script {
           // Clean existing node_modules (optional)
-          sh 'rm -rf node_modules'
+          if (fileExists('node_modules'))
+          {
+              echo 'removing node_modules...'
+              sh 'rm -rf node_modules'
+              echo 'node_modules removed'
+          }
+          
 
           // Cache the node_modules directory
           dir('node_modules') {
+            echo 'enabling cache'
             cache true
           }
 
           // Install dependencies using npm or npm ci (recommended)
+          echo 'Installing dependencies using npm ci'
           sh 'npm ci' // Or sh 'npm install'
         }
         echo 'record key below'
