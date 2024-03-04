@@ -16,22 +16,19 @@ pipeline {
     stage('build') {
       steps {
         echo 'building the app'
+        bat 'npm i'
+        echo 'record key below'
+        echo '%CYPRESS_RECORD_KEY%'
       }
 
     }
     stage('testing') {
-      steps {
-      
-        bat 'npm i'
-        echo 'record key below'
-        echo '%CYPRESS_RECORD_KEY%'
+   
         //echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
         //bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --group Windows/Chrome chrome'
         //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
         //bat 'npx cypress run --browser chrome'
-      }
-
-
+      
       parallel {
         // start several test jobs in parallel, and they all
         // will use Cypress Cloud to load balance any found spec files
