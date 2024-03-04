@@ -26,7 +26,7 @@ pipeline {
         echo 'record key below'
         echo '%CYPRESS_RECORD_KEY%'
         //echo 'record key: ${Cypress.env("CYPRESS_RECORD_KEY")}'
-        bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC%'
+        bat 'npx cypress run --record --key %CYPRESS_RECORD_KEY% --spec %SPEC% --parallel'
         //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
         //bat 'npx cypress run --browser chrome'
       }
