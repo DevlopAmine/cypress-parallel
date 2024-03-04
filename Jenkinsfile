@@ -37,10 +37,10 @@ pipeline {
       //bat 'npx cypress run --browser %BROWSER% --spec %SPEC%'
       //bat 'npx cypress run --browser chrome'
 
-      parallel {
+      
         // start several test jobs in parallel, and they all
         // will use Cypress Cloud to load balance any found spec files
-        stage('run on chrome') {
+/*         stage('run on chrome') {
           steps {
             echo "Running build  ${env.BUILD_ID}"
             bat "npm run e2e:record:chrome"
@@ -54,7 +54,30 @@ pipeline {
             bat "npm run e2e:record:edge"
           }
         }
-      }
+
+        stage('run on Parallel') {
+          steps {
+            echo "Running build  ${env.BUILD_ID}"
+            bat "npm run e2e:record:parallel"
+          }
+        } */
+
+    parallel {
+        stage('Group 1-getting-started/') {
+          steps {
+            echo "Running build  ${env.BUILD_NUMBER}"
+            bat 'cypress run --record --group getStarted --spec "cypress/e2e/1-getting-started/*"'
+            
+          }
+        }
+
+         stage('Group 2-advanced-examples') {
+          steps {
+            echo "Running build  ${env.BUILD_NUMBER}"
+            bat 'cypress run --record --group advancedExamp --spec "cypress/e2e/2-advanced-examples/*"'
+          }
+        }
+    }
 
     }
     stage('deploy') {
