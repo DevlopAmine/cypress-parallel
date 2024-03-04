@@ -1,10 +1,10 @@
 pipeline {
   agent any
 
-  parameters {
+  //parameters {
     //string(name: 'SPEC', defaultValue: 'cypress/e2e/2-advanced-examples/**.cy.js', description: 'Enter the path of script to exec')
     //choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Choice the browser')
-  }
+ // }
    environment {
       CYPRESS_RECORD_KEY = '46fec6e6-3734-4e43-a577-b74c4c88483e'
     }
