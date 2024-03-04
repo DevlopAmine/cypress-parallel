@@ -20,23 +20,25 @@ pipeline {
 
         script {
           // Clean existing node_modules (optional)
-          if (fileExists('node_modules'))
+  /*         if (fileExists('node_modules'))
           {
               echo 'removing node_modules...'
-              sh 'AAA'
+              sh 'rm -rf node_modules'
               echo 'node_modules removed'
           }
-          
+*/
+        echo 'access node_modules'
+        bat 'cd node_modules'
+        bat 'cd ..'
+        echo 'out node_modules'
+        
+        echo 'create C://npm_cache ...'
+        bat 'mkdir C://npm_cache'
+        bat "xcopy /S /E node_modules C://npm_cache" // Copy node_modules to cache
 
-          // Cache the node_modules directory
-          dir('node_modules') {
-            echo 'enabling cache'
-            cache true
-          }
-
-          // Install dependencies using npm or npm ci (recommended)
-          echo 'Installing dependencies using npm ci'
-          sh 'npm ci' // Or sh 'npm install'
+        // Install dependencies using npm or npm ci (recommended)
+        echo 'Installing dependencies using npm ci'
+        bat 'npm ci' // Or sh 'npm install'
         }
         echo 'record key below'
         echo '%CYPRESS_RECORD_KEY%'
