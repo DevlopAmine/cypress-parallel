@@ -20,7 +20,7 @@ pipeline {
 
         script {
           // Clean existing node_modules (optional)
-          bat 'rm -rf node_modules'
+          sh 'rm -rf node_modules'
 
           // Cache the node_modules directory
           dir('node_modules') {
@@ -28,7 +28,7 @@ pipeline {
           }
 
           // Install dependencies using npm or npm ci (recommended)
-          bat 'npm ci' // Or sh 'npm install'
+          sh 'npm ci' // Or sh 'npm install'
         }
         echo 'record key below'
         echo '%CYPRESS_RECORD_KEY%'
